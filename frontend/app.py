@@ -211,22 +211,23 @@ with col1:
                 loop.close()
                 
                 if user_transcript:
-                    # Add user transcript to conversation
+                    # Add user transcript to conversation with audio
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     st.session_state.conversation_history.append({
                         "role": "user",
                         "content": user_transcript,
-                        "timestamp": timestamp
+                        "timestamp": timestamp,
+                        "audio": audio_bytes  # Store user's recorded audio
                     })
                 
                 if assistant_response:
-                    # Add assistant response to conversation
+                    # Add assistant response to conversation with audio
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     st.session_state.conversation_history.append({
                         "role": "assistant",
                         "content": assistant_response,
                         "timestamp": timestamp,
-                        "audio": response_audio  # Store audio with the message
+                        "audio": response_audio  # Store assistant's TTS audio
                     })
                     st.success("Voice message processed!")
                 else:
@@ -277,6 +278,11 @@ with col1:
                 <strong>You ({msg['timestamp']}):</strong> {msg['content']}
             </div>
             """, unsafe_allow_html=True)
+            
+            # Play user's audio if available
+            if msg.get("audio"):
+                st.audio(msg["audio"], format="audio/wav")
+                
         else:
             st.markdown(f"""
             <div class="chat-message assistant-message">
@@ -284,7 +290,7 @@ with col1:
             </div>
             """, unsafe_allow_html=True)
             
-            # Play audio if available for this message
+            # Play assistant's audio if available
             if msg.get("audio"):
                 st.audio(msg["audio"], format="audio/mp3")
 

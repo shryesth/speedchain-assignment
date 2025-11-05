@@ -524,5 +524,68 @@
     "metadata": {},
     "created_at": "2025-11-06T03:21:28.322394",
     "last_updated": "2025-11-06T03:22:05.257668"
+  },
+  "user_20251106_032656": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:27:08.137221",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hello there!",
+        "timestamp": "2025-11-06T03:27:14.994332",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hi there! It's great to see you. What services are you interested in today?",
+        "timestamp": "2025-11-06T03:27:16.474765",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:36:38.590781",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "My name is Srishti Pandey.",
+        "timestamp": "2025-11-06T03:36:46.262183",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Nice to meet you, Srishti! What service are you looking to book today? We offer haircuts, hair coloring, styling, and spa treatments.",
+        "timestamp": "2025-11-06T03:36:47.699564",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:37:26.747074",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Did he buy it?",
+        "timestamp": "2025-11-06T03:37:35.227808",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "I\u2019m here to assist you with your appointment or any questions you might have about our services. If you\u2019re asking about booking, please let me know what service you're interested in!",
+        "timestamp": "2025-11-06T03:37:36.527777",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "customer_name": "Srishti"
+    },
+    "created_at": "2025-11-06T03:27:08.137221",
+    "last_updated": "2025-11-06T03:37:36.527777"
   }
 }
