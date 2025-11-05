@@ -1,0 +1,528 @@
+{
+  "user_20251106_021646": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:17:01.599177",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "{\"text\": \"hi\"}",
+        "timestamp": "2025-11-06T02:17:09.548011",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hi there! How can I assist you today? Are you looking to book an appointment or inquire about our services?",
+        "timestamp": "2025-11-06T02:17:11.192601",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T02:17:01.599177",
+    "last_updated": "2025-11-06T02:17:11.192601"
+  },
+  "user_20251106_021947": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:20:18.489153",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "{\"text\": \"hello\"}",
+        "timestamp": "2025-11-06T02:20:26.756010",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! It's great to see you. How can I assist you today? Are you looking for a specific service or stylist?",
+        "timestamp": "2025-11-06T02:20:28.647895",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T02:20:18.489153",
+    "last_updated": "2025-11-06T02:20:28.647895"
+  },
+  "user_20251106_022201": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:22:14.638946",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "{\"text\": \"hii\"}",
+        "timestamp": "2025-11-06T02:22:17.497344",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hi there! It's great to see you. How can I assist you today? Are you looking to book a service or have any questions?",
+        "timestamp": "2025-11-06T02:22:19.209945",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T02:22:14.638946",
+    "last_updated": "2025-11-06T02:22:19.209945"
+  },
+  "user_20251106_025231": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:52:52.241879",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hello, how are you?",
+        "timestamp": "2025-11-06T02:52:59.901043",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T02:52:52.241879",
+    "last_updated": "2025-11-06T02:52:59.901043"
+  },
+  "user_20251106_025508": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:55:18.190360",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hello there, I would like to make an appointment.",
+        "timestamp": "2025-11-06T02:55:25.141080",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T02:55:18.190360",
+    "last_updated": "2025-11-06T02:55:25.141080"
+  },
+  "user_20251106_025735": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:57:47.497878",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hello there, I would like to make an appointment.",
+        "timestamp": "2025-11-06T02:57:56.073531",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Of course! I'd be happy to assist you with that. What service are you looking to book?",
+        "timestamp": "2025-11-06T02:57:57.230939",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:58:37.224127",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Which services do you offer?",
+        "timestamp": "2025-11-06T02:58:48.919243",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "We offer a variety of services including Haircuts, Hair Coloring, Styling, and Spa Treatments. Do any of these services interest you?",
+        "timestamp": "2025-11-06T02:58:50.443055",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:59:10.819852",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "I want a sparkly thing.",
+        "timestamp": "2025-11-06T02:59:17.928383",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "It sounds like you might be interested in hair coloring or highlights! Would you like to book a coloring appointment?",
+        "timestamp": "2025-11-06T02:59:19.571761",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T02:59:43.153370",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "yes go ahead",
+        "timestamp": "2025-11-06T02:59:49.200385",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great! Can you please provide me with your name?",
+        "timestamp": "2025-11-06T02:59:50.776304",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:00:03.622915",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "My name is Shresth Pandey.",
+        "timestamp": "2025-11-06T03:00:10.878131",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you, Shresth! What service are you interested in\u2014hair coloring, highlights, or something else?",
+        "timestamp": "2025-11-06T03:00:12.695619",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:00:28.195145",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "I want to book for hair cutting.",
+        "timestamp": "2025-11-06T03:00:37.358540",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great choice, Shresth! Would you like to book with Riya, who specializes in haircuts and styling, or Alex, who does creative cuts?",
+        "timestamp": "2025-11-06T03:00:38.978584",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:00:55.384146",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Uh, I would like to go with Alex.",
+        "timestamp": "2025-11-06T03:01:03.125614",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Excellent choice! When would you like to schedule your haircut with Alex? We have available slots on Monday to Saturday at 10:00 AM, 11:00 AM, 12:00 PM, 2:00 PM, 3:00 PM, 4:00 PM, 5:00 PM, and 6:00 PM.",
+        "timestamp": "2025-11-06T03:01:05.199688",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:01:33.479629",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Select 10 p.m. on Monday.",
+        "timestamp": "2025-11-06T03:01:45.487795",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "It looks like there was a little mix-up with the time; we only have slots available until 7 PM. Would you like to choose a different time, such as 10:00 AM, 11:00 AM, or any other time up to 6:00 PM on Monday?",
+        "timestamp": "2025-11-06T03:01:47.734286",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:02:11.476662",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Okay then, pick 10.30 AM.",
+        "timestamp": "2025-11-06T03:02:19.926426",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "I appreciate your enthusiasm, but our available slots are on the hour or half-hour. Would you like to book for 10:00 AM or 11:00 AM instead?",
+        "timestamp": "2025-11-06T03:02:21.971866",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:02:41.278742",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "uh let's go with 10 am then",
+        "timestamp": "2025-11-06T03:03:05.577027",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:03:19.063852",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hey, did you forgot I was making the appointment?",
+        "timestamp": "2025-11-06T03:03:26.277695",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "I apologize for that! Thank you for your patience. Let's get your appointment set up for 10:00 AM on Monday. What service would you like to book, and do you have a preferred stylist?",
+        "timestamp": "2025-11-06T03:03:28.676731",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:03:55.424865",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "I am looking for a haircut with Alex.",
+        "timestamp": "2025-11-06T03:04:03.266223",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great choice! Alex specializes in creative cuts and color. Can you please provide me with your name, the date you\u2019d like to book for, and your email address?",
+        "timestamp": "2025-11-06T03:04:05.177851",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:04:38.202286",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "My name is Shresth Pandey. My email is shresth4236 at the red gmail.com and Select the date 7th November 2025",
+        "timestamp": "2025-11-06T03:04:50.162231",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you, Shresth! Just to confirm, you\u2019d like to book a haircut with Alex on November 7th, 2025, at 10:00 AM. Is that correct?",
+        "timestamp": "2025-11-06T03:04:51.502018",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:05:12.182623",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Yes, that is correct. Please go ahead with scheduling my appointment.",
+        "timestamp": "2025-11-06T03:05:20.013860",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Your appointment is confirmed! You have a haircut with Alex on November 7th, 2025, at 10:00 AM. You will receive a confirmation email shortly at shresth4236@gmail.com. If you have any questions or need further assistance, feel free to ask!",
+        "timestamp": "2025-11-06T03:05:22.327498",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "service_type": "Haircut",
+      "customer_name": "Shresth",
+      "preferred_stylist": "Alex",
+      "date": "Monday",
+      "time": "10:00 AM"
+    },
+    "created_at": "2025-11-06T02:57:47.497878",
+    "last_updated": "2025-11-06T03:05:22.327498"
+  },
+  "user_20251106_031114": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:11:32.504726",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "yellooooooooow helloooooow",
+        "timestamp": "2025-11-06T03:11:44.799893",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! It's great to hear from you! How can I assist you today at Gloss and Glow Hair Salon?",
+        "timestamp": "2025-11-06T03:11:46.922190",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:12:40.008332",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hi, what services do you offer?",
+        "timestamp": "2025-11-06T03:12:50.376700",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hi there! We offer a range of services including Haircuts, Hair Coloring, Styling, and Spa Treatments. Is there a specific service you're interested in?",
+        "timestamp": "2025-11-06T03:12:52.077455",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T03:11:32.504726",
+    "last_updated": "2025-11-06T03:12:52.077455"
+  },
+  "user_20251106_031714": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:17:26.991172",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hi there",
+        "timestamp": "2025-11-06T03:17:32.262462",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hi! It's great to see you. What services are you interested in today?",
+        "timestamp": "2025-11-06T03:17:33.270666",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T03:17:26.991172",
+    "last_updated": "2025-11-06T03:17:33.270666"
+  },
+  "user_20251106_031821": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:18:33.270070",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "hello there",
+        "timestamp": "2025-11-06T03:18:39.292862",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! It's great to see you. How can I assist you today? Are you looking for a specific service?",
+        "timestamp": "2025-11-06T03:18:40.680102",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:19:02.587988",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "I am looking to book an air cut.",
+        "timestamp": "2025-11-06T03:19:09.015853",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "That sounds wonderful! Would you prefer to book with Riya, who specializes in haircuts and styling, or would you like to choose someone else?",
+        "timestamp": "2025-11-06T03:19:10.640128",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T03:18:33.270070",
+    "last_updated": "2025-11-06T03:19:10.640128"
+  },
+  "user_20251106_032116": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:21:28.322394",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hello, can you hear me?",
+        "timestamp": "2025-11-06T03:21:40.281848",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Yes, I can hear you! How can I assist you today?",
+        "timestamp": "2025-11-06T03:21:41.432166",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T03:21:56.499133",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hi, what services do you provide?",
+        "timestamp": "2025-11-06T03:22:03.471063",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "We offer a range of services including Haircuts, Hair Coloring, Styling, and Spa Treatments. Is there a specific service you\u2019re interested in?",
+        "timestamp": "2025-11-06T03:22:05.257668",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T03:21:28.322394",
+    "last_updated": "2025-11-06T03:22:05.257668"
+  }
+}

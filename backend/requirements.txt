@@ -2,14 +2,14 @@ fastapi==0.104.1
 uvicorn[standard]==0.24.0
 websockets==12.0
 python-dotenv==1.0.0
-openai==1.35.14
+openai>=1.40.0
 python-multipart==0.0.6
 aiofiles==23.2.1
 
 # Audio processing
 pydub==0.25.1
 numpy==1.24.3
-wave
+# wave
 
 # For STT and TTS
 openai-whisper==20231117
