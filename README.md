@@ -24,9 +24,10 @@ This AI receptionist serves **Gloss & Glow Hair Salon**, a fictional hair salon 
 **Backend (FastAPI)**
 - **Framework**: FastAPI with WebSocket support
 - **STT Model**: OpenAI Whisper-1 (Speech-to-Text)
-- **LLM**: GPT-4o-mini (Conversational AI)
+- **LLM**: GPT-4o-mini (Conversational AI & Metadata Extraction)
 - **TTS Model**: OpenAI TTS-1 with Nova voice (Text-to-Speech)
 - **Email**: aiosmtplib for async email delivery
+- **Architecture**: Modular route structure with service injection
 
 **Frontend (Streamlit)**
 - **Framework**: Streamlit 1.51.0+
@@ -41,7 +42,8 @@ User Voice Input
     ↓
 [STT] Whisper-1 converts speech → text
     ↓
-[Memory Service] Extracts metadata (name, service, date, time, email)
+[Memory Service] Uses LLM (GPT-4o-mini) to extract metadata intelligently
+    ↓  
     ↓
 [LLM] GPT-4o-mini generates contextual response
     ↓
@@ -58,17 +60,19 @@ User receives voice + text response
 speedchain-assignment/
 │
 ├── backend/
-│   ├── main.py                    # FastAPI app with WebSocket endpoint
+│   ├── main.py                    # FastAPI app entry point with service injection
 │   ├── requirements.txt           # Python dependencies
 │   ├── .env.example              # Environment variables template
-│   ├── services/
-│   │   ├── voice_service.py      # STT & TTS using OpenAI
-│   │   ├── llm_service.py        # LLM conversation handling
-│   │   ├── memory_service.py     # Conversation memory & metadata extraction
-│   │   └── appointment_service.py # Scheduling & email notifications
-│   ├── routes/                    # API routes (extensible)
-│   ├── memory/                    # Memory storage utilities
-│   └── utils/                     # Helper functions
+│   ├── routes/
+│   │   ├── __init__.py           # Route package init
+│   │   ├── appointments.py       # Appointment scheduling endpoints
+│   │   ├── conversation.py       # Conversation history endpoints
+│   │   └── websocket.py          # WebSocket handler (voice/text communication)
+│   └── services/
+│       ├── voice_service.py      # STT & TTS using OpenAI
+│       ├── llm_service.py        # LLM conversation & intelligent metadata extraction
+│       ├── memory_service.py     # Conversation memory & context management
+│       └── appointment_service.py # Scheduling & email notifications
 │
 ├── frontend/
 │   ├── app.py                    # Streamlit UI application
@@ -187,28 +191,43 @@ AI: "Perfect, John! I've scheduled your haircut with Riya for tomorrow at 3 PM. 
 - **Performance**: Fast transcription with good quality
 
 ### LLM: GPT-4o-mini
+
 - **Why**: Cost-effective, fast responses, good conversational abilities
 - **Context**: Maintains conversation history for coherent interactions
+- **Dual Role**: Both conversation generation AND intelligent metadata extraction
+- **Extraction**: Uses structured JSON output to extract booking details from natural language
 
 ### TTS: OpenAI TTS-1 (Nova Voice)
+
 - **Why**: Natural-sounding voice, low latency
 - **Voice Choice**: Nova - friendly and professional tone suitable for receptionist
 
 ## 💾 Memory & Metadata Management
 
 ### Conversation Memory
+
 - Stores complete message history per user session
 - Maintains context across multiple interactions
 - Persists to `data/conversations.json`
 
 ### Metadata Extraction
-Automatically detects and extracts:
-- **Customer Name**: From phrases like "My name is...", "I'm...", "Call me..."
-- **Service Type**: Haircut, Coloring, Styling, Spa Treatment
+
+Uses **LLM-based intelligent extraction** (GPT-4o-mini) with regex fallback:
+
+- **Customer Name**: Extracted from conversation context using NLP
+- **Service Type**: Haircut, Coloring, Styling, Spa Treatment (handles multiple services)
 - **Stylist Preference**: Riya, Maya, Sarah, Alex
 - **Date**: Today, Tomorrow, or specific weekdays
 - **Time**: Time slots from 10 AM to 7 PM
-- **Email**: Valid email addresses
+- **Email**: Validates and auto-completes domains (e.g., "gmail" → "gmail.com")
+
+**Key Features:**
+
+- Handles speech-to-text variations: "at the rate" → "@", "dot" → "."
+- Accumulates information across conversation turns (uses last 10 messages for context)
+- Smart email domain completion for incomplete addresses
+- Robust to typos and speech recognition errors
+- Structured JSON output with field validation
 
 ### Appointment Scheduling
 - Generates unique appointment IDs
@@ -242,6 +261,19 @@ To enable email confirmations:
 - `GET /conversation-history/{user_id}` - Get user conversation history
 
 ## 🛠️ Development
+
+### Architecture Highlights
+
+**Modular Route Structure:**
+- Routes separated into dedicated files (`appointments.py`, `conversation.py`, `websocket.py`)
+- Service injection pattern for dependency management
+- Clean separation of concerns
+
+**Service Layer:**
+- `VoiceService`: Handles STT/TTS operations
+- `LLMService`: Manages conversations AND metadata extraction
+- `MemoryService`: Conversation context and persistence
+- `AppointmentService`: Booking logic and email notifications
 
 ### Adding New Services
 Edit `backend/services/memory_service.py` to add service keywords:
