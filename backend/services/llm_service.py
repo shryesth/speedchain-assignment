@@ -1,9 +1,22 @@
 import logging
 import os
-from typing import List, Dict, Any
+import json
+from typing import List, Dict, Any, Optional
 from openai import AsyncOpenAI
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
+
+
+class AppointmentMetadata(BaseModel):
+    """Schema for extracted appointment metadata."""
+    customer_name: Optional[str] = Field(None, description="Customer's full name")
+    service_type: Optional[str] = Field(None, description="Type of service (e.g., Haircut, Coloring, Styling)")
+    preferred_stylist: Optional[str] = Field(None, description="Preferred stylist name (Riya, Maya, Sarah, or Alex)")
+    date: Optional[str] = Field(None, description="Appointment date (e.g., Monday, Tomorrow, Today)")
+    time: Optional[str] = Field(None, description="Appointment time in 12-hour format (e.g., 10:00 AM)")
+    email: Optional[str] = Field(None, description="Customer's email address")
+    phone: Optional[str] = Field(None, description="Customer's phone number")
 
 class LLMService:
     """Service for LLM-based conversation and intent understanding."""
@@ -126,3 +139,83 @@ Remember: You represent the salon's first impression!"""
         has_all_info = all(field in metadata for field in required_fields)
         
         return has_booking_phrase and has_all_info
+
+    async def extract_metadata_with_llm(self, conversation_text: str) -> Dict[str, Any]:
+        """
+        Extract appointment metadata from conversation using LLM with structured output.
+        This is more robust than regex for handling speech-to-text variations.
+        
+        Args:
+            conversation_text: The conversation text to extract metadata from
+            
+        Returns:
+            Dictionary with extracted metadata fields
+        """
+        try:
+            extraction_prompt = f"""Extract appointment booking information from this conversation text.
+The text may come from speech-to-text and might have variations like:
+- "my email is shresth at the rate 4236 at gmail dot com" → shresth4236@gmail.com
+- "my name is john smith" → John Smith
+- "eleven am" or "11 am" → 11:00 AM
+- "hair coloring" or "color" → Hair Coloring
+
+Conversation text: "{conversation_text}"
+
+Extract ALL available information. Return null for fields not mentioned.
+Service types: Haircut, Hair Coloring, Styling, Spa Treatment
+Stylists: Riya, Maya, Sarah, Alex
+Time format: Use 12-hour format with AM/PM (e.g., 11:00 AM)
+"""
+
+            response = await self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a data extraction assistant. Extract appointment information accurately, handling speech-to-text variations. Convert email addresses properly (e.g., 'at the rate' → '@', 'dot' → '.'). Return valid JSON."
+                    },
+                    {
+                        "role": "user",
+                        "content": extraction_prompt
+                    }
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.1  # Low temperature for consistent extraction
+            )
+            
+            # Parse the JSON response
+            extracted_data = json.loads(response.choices[0].message.content)
+            
+            # Clean and validate the extracted data
+            metadata = {}
+            
+            if extracted_data.get("customer_name"):
+                metadata["customer_name"] = extracted_data["customer_name"].strip().title()
+            
+            if extracted_data.get("service_type"):
+                metadata["service_type"] = extracted_data["service_type"].strip().title()
+            
+            if extracted_data.get("preferred_stylist"):
+                metadata["preferred_stylist"] = extracted_data["preferred_stylist"].strip().title()
+            
+            if extracted_data.get("date"):
+                metadata["date"] = extracted_data["date"].strip().title()
+            
+            if extracted_data.get("time"):
+                metadata["time"] = extracted_data["time"].strip()
+            
+            if extracted_data.get("email"):
+                # Basic email validation
+                email = extracted_data["email"].strip().lower()
+                if "@" in email and "." in email:
+                    metadata["email"] = email
+            
+            if extracted_data.get("phone"):
+                metadata["phone"] = extracted_data["phone"].strip()
+            
+            logger.info(f"LLM extracted metadata: {metadata}")
+            return metadata
+            
+        except Exception as e:
+            logger.error(f"Error in LLM metadata extraction: {e}")
+            return {}

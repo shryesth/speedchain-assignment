@@ -587,5 +587,465 @@
     },
     "created_at": "2025-11-06T03:27:08.137221",
     "last_updated": "2025-11-06T03:37:36.527777"
+  },
+  "user_20251106_053909": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T05:40:35.606617",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "hi there i want to have a haircut uh on monday 11 a.m",
+        "timestamp": "2025-11-06T05:40:46.318020",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great choice! For a haircut, I recommend Riya, who specializes in haircuts and styling. Can I have your name and email to proceed with the booking?",
+        "timestamp": "2025-11-06T05:40:48.216039",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T05:41:51.245776",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "My name is Shresth and my email is shr by esph4236 at gmail.com",
+        "timestamp": "2025-11-06T05:42:01.489209",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you, Shresth! Just to confirm, you'd like to book a haircut with Riya on Monday at 11 AM. Is that correct?",
+        "timestamp": "2025-11-06T05:42:03.204877",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T05:42:30.508129",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Yes, that is correct.",
+        "timestamp": "2025-11-06T05:42:41.632392",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Perfect! I\u2019ve booked your haircut with Riya on Monday at 11 AM. You will receive a confirmation email shortly at shr by esph4236@gmail.com. Is there anything else I can assist you with today?",
+        "timestamp": "2025-11-06T05:42:45.321469",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T05:49:06.600483",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Can you send that email again?",
+        "timestamp": "2025-11-06T05:49:15.998262",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "I apologize, but I can't resend emails directly. However, you should receive a confirmation email shortly after your booking. If you don\u2019t see it in your inbox, please check your spam folder. Is there anything else I can assist you with?",
+        "timestamp": "2025-11-06T05:49:18.176164",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T05:50:00.263321",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Can you confirm my email address?",
+        "timestamp": "2025-11-06T05:50:06.940549",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Your email address is shr by esph4236@gmail.com. If that's correct, you'll receive your confirmation email there. Is there anything else you need help with?",
+        "timestamp": "2025-11-06T05:50:08.828588",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "service_type": "Haircut",
+      "date": "Monday",
+      "customer_name": "Shresth"
+    },
+    "created_at": "2025-11-06T05:40:35.606617",
+    "last_updated": "2025-11-06T05:50:08.828588"
+  },
+  "user_20251106_091947": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:20:41.140978",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hey there, I am Shresth, I want to get a haircut and I am looking for an appointment from Alex on Saturday, 10 am. My email id is shresth4236 at gmail.com. Please schedule my appointment.",
+        "timestamp": "2025-11-06T09:21:00.374222",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "service_type": "Haircut",
+      "preferred_stylist": "Alex",
+      "email": "10am.myemailidisshresth4236@gmail.com",
+      "time": "10:00 AM",
+      "date": "Saturday"
+    },
+    "created_at": "2025-11-06T09:20:41.140978",
+    "last_updated": "2025-11-06T09:21:00.374222"
+  },
+  "user_20251106_092224": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:23:25.382624",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "My name is Shresth Pandey. I am looking for hair coloring appointment from Maya. I want to schedule appointment on Tuesday 11am. My email id is shresth4236 at gmail.com",
+        "timestamp": "2025-11-06T09:23:39.125503",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you, Shresth! Just to confirm, Maya is available on Tuesdays, but our salon is open from Monday to Saturday. Would you like to schedule your hair coloring appointment with her on the next available day, which is Monday at 11 AM?",
+        "timestamp": "2025-11-06T09:23:41.337841",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:24:25.521722",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "okay sounds good then schedule my appointment on Monday 11 a.m.",
+        "timestamp": "2025-11-06T09:24:35.458350",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great choice, Shresth! I\u2019ve scheduled your hair coloring appointment with Maya on Monday at 11 AM. Could you please confirm your email address for the appointment confirmation?",
+        "timestamp": "2025-11-06T09:24:37.119131",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:25:05.164150",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "The email is shrest4236 at the rate gmail.com",
+        "timestamp": "2025-11-06T09:25:13.343174",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you for confirming, Shresth! I have your hair coloring appointment with Maya scheduled for Monday at 11 AM. You will receive a confirmation email at shresth4236@gmail.com. If you have any other questions or need further assistance, feel free to ask!",
+        "timestamp": "2025-11-06T09:25:15.537912",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:28:34.049621",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Can you re-send the email?",
+        "timestamp": "2025-11-06T09:28:44.056518",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "I don't have the ability to resend emails directly, but you can expect the confirmation email to arrive shortly at shresth4236@gmail.com. If you don't see it in your inbox, please check your spam or junk folder. If you still have issues, let me know!",
+        "timestamp": "2025-11-06T09:28:46.118249",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "customer_name": "Shresth",
+      "service_type": "Coloring",
+      "preferred_stylist": "Maya",
+      "email": "mynameisshresthpandey.iamlookingforhaircoloringappointmentfrommaya.iwanttoscheduleappointmentontuesday11am.myemailidisshresth4236@gmail.com",
+      "time": "11:00 AM",
+      "date": "Monday"
+    },
+    "created_at": "2025-11-06T09:23:25.382624",
+    "last_updated": "2025-11-06T09:28:46.118249"
+  },
+  "user_20251106_093025": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:31:35.013433",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "{\"text\": \"Hi there my name is shryesth pandey, my email is shryesth4236@gmail.com and I want to book an appointment from sarah for Spa on Monday 11AM. Please do the needful\"}",
+        "timestamp": "2025-11-06T09:31:38.040875",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello Shryesth Pandey! Thank you for reaching out. I can help you with that. Just to confirm, you\u2019d like to book a spa treatment with Sarah on Monday at 11 AM. Is that correct?",
+        "timestamp": "2025-11-06T09:31:40.392952",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "customer_name": "Shryesth",
+      "service_type": "Spa",
+      "preferred_stylist": "Sarah",
+      "email": "shryesth4236@gmail.com",
+      "time": "11:00 AM",
+      "date": "Monday"
+    },
+    "created_at": "2025-11-06T09:31:35.013433",
+    "last_updated": "2025-11-06T09:31:40.392952"
+  },
+  "user_20251106_093452": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:35:31.603710",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hey there, my name is Shresth and I am looking for an appointment for hair colouring from Maya. I would prefer it to be scheduled on Monday and my email id is shresth4236 at the redgmail.com. Please schedule the meeting.",
+        "timestamp": "2025-11-06T09:35:47.049185",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great to meet you, Shresth! I can help you with that. What time on Monday would you prefer for your hair coloring appointment with Maya? Available slots are 10:00 AM, 11:00 AM, 12:00 PM, 2:00 PM, 3:00 PM, 4:00 PM, 5:00 PM, and 6:00 PM.",
+        "timestamp": "2025-11-06T09:35:50.067042",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:36:25.312920",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Please schedule the slot of 3 p.m.",
+        "timestamp": "2025-11-06T09:36:34.511528",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Perfect! I have you scheduled for a hair coloring appointment with Maya on Monday at 3:00 PM. Can you please confirm your email address for the booking? I have it as shresth4236 at the redgmail.com.",
+        "timestamp": "2025-11-06T09:36:36.517585",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:37:01.168990",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Please schedule the slot of 3 p.m.",
+        "timestamp": "2025-11-06T09:37:09.124781",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Perfect! I have you scheduled for a hair coloring appointment with Maya on Monday at 3:00 PM. Can you please confirm your email address for the booking? I have it as shresth4236 at the redgmail.com.",
+        "timestamp": "2025-11-06T09:37:11.370143",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:37:58.588877",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:38:05.888556",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Please schedule the slot of 3 p.m.",
+        "timestamp": "2025-11-06T09:38:08.220455",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great choice! I\u2019ll schedule you for a hair coloring appointment with Maya on Monday at 3:00 PM. Could you please provide me with your name and email address for the booking?",
+        "timestamp": "2025-11-06T09:38:09.618313",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "it's shrest4236 at gmail.com",
+        "timestamp": "2025-11-06T09:38:12.496714",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you, Shrest! Just to confirm, I have you booked for a hair coloring appointment with Maya on Monday at 3:00 PM. Your email is shrest4236@gmail.com. Does that look correct?",
+        "timestamp": "2025-11-06T09:38:14.938859",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:38:48.294211",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Yes, that is correct. Please go ahead.",
+        "timestamp": "2025-11-06T09:38:55.591065",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you for confirming, Shrest! Your appointment is now booked for a hair coloring with Maya on Monday at 3:00 PM. You will receive an email confirmation shortly. If you have any questions or need further assistance, feel free to ask!",
+        "timestamp": "2025-11-06T09:38:58.149505",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "customer_name": "Shresth",
+      "preferred_stylist": "Maya",
+      "date": "Monday",
+      "time": "3:00 PM",
+      "email": "shrest4236@gmail.com"
+    },
+    "created_at": "2025-11-06T09:35:31.603710",
+    "last_updated": "2025-11-06T09:38:58.149505"
+  },
+  "user_20251106_095025": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T09:50:39.293529",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Beep",
+        "timestamp": "2025-11-06T09:50:45.532558",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "It seems like you're having a little fun! If you need assistance with booking an appointment or have any questions about our services, just let me know!",
+        "timestamp": "2025-11-06T09:50:47.166979",
+        "metadata": {}
+      }
+    ],
+    "metadata": {},
+    "created_at": "2025-11-06T09:50:39.293529",
+    "last_updated": "2025-11-06T09:50:47.166979"
+  },
+  "user_20251106_120238": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T12:03:07.677263",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hi there, I'm Shrest. I want to book a hair colouring appointment with Maya. I'm looking forward to an appointment on Monday, 10am and my email id is shrest4236 at gmail.com",
+        "timestamp": "2025-11-06T12:03:28.996905",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "date": "Monday",
+      "time": "10:00 AM",
+      "email": "shrest4236@gmail.com"
+    },
+    "created_at": "2025-11-06T12:03:07.677263",
+    "last_updated": "2025-11-06T12:03:28.996905"
+  },
+  "user_20251106_120720": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T12:08:16.995926",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Hi there, my name is Shresth. I'm looking for a haircut appointment with Rhea on Monday 10am. You can send the appointment details on shresth4236 at the rate gmail.com. It is pronounced as s-h-r-y-e-s-t-h-4-2-3-6 at the rate gmail.com.",
+        "timestamp": "2025-11-06T12:08:42.683645",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Thank you, Shresth! It looks like you meant Riya for your haircut appointment. Let me confirm your details: \n\n- **Service:** Haircut\n- **Stylist:** Riya\n- **Date:** Monday\n- **Time:** 10:00 AM\n- **Email:** shresth4236@gmail.com\n\nCan you please confirm if everything is correct?",
+        "timestamp": "2025-11-06T12:08:47.990479",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! Welcome to Gloss and Glow Hair Salon. I'm your AI receptionist. How can I help you today?",
+        "timestamp": "2025-11-06T12:10:02.874995",
+        "metadata": {}
+      },
+      {
+        "role": "user",
+        "content": "Uh, everything looks good. Please go ahead.",
+        "timestamp": "2025-11-06T12:10:15.034988",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Great! Your haircut appointment with Riya is confirmed for Monday at 10:00 AM. You'll receive an email confirmation shortly at shresth4236@gmail.com. \n\nIf you have any other questions or need further assistance, feel free to ask!",
+        "timestamp": "2025-11-06T12:10:19.751766",
+        "metadata": {}
+      }
+    ],
+    "metadata": {
+      "date": "Monday",
+      "time": "10:00 AM",
+      "email": "shresth4236@gmail.com"
+    },
+    "created_at": "2025-11-06T12:08:16.995926",
+    "last_updated": "2025-11-06T12:10:19.751766"
   }
 }

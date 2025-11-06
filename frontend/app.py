@@ -57,16 +57,37 @@ WS_URL = f"ws://localhost:8000/ws/{st.session_state.client_id}"
 
 async def send_text_to_backend(user_text):
     try:
-        async with websockets.connect(WS_URL) as websocket:
+        # Increase timeouts for LLM processing
+        async with websockets.connect(
+            WS_URL,
+            ping_timeout=60,
+            close_timeout=20,
+            ping_interval=20
+        ) as websocket:
+            # First, receive and skip the initial greeting
+            try:
+                for _ in range(3):
+                    greeting_msg = await asyncio.wait_for(websocket.recv(), timeout=5.0)
+                    if isinstance(greeting_msg, str):
+                        try:
+                            data = json.loads(greeting_msg)
+                            if data.get("type") == "text" and "Welcome" in data.get("content", ""):
+                                continue
+                        except:
+                            pass
+            except asyncio.TimeoutError:
+                pass
+            
+            # Now send the text message
             await websocket.send(json.dumps({"text": user_text}))
             
             responses = []
             timeout_count = 0
-            max_timeouts = 3  # Increased to wait longer
+            max_timeouts = 5  # Increased to wait longer for LLM processing
             
             while timeout_count < max_timeouts:
                 try:
-                    message = await asyncio.wait_for(websocket.recv(), timeout=5.0)  # Increased timeout
+                    message = await asyncio.wait_for(websocket.recv(), timeout=20.0)  # Increased timeout for LLM
                     
                     # Check if message is binary (audio) or text (JSON)
                     if isinstance(message, bytes):
@@ -78,9 +99,10 @@ async def send_text_to_backend(user_text):
                         data = json.loads(message)
                         responses.append(data)
                         
-                        # If we got the assistant response, we can break
+                        # If we got the assistant response (not the greeting), we can break
                         if data.get("type") == "text" and data.get("role") == "assistant":
-                            break
+                            if "Welcome" not in data.get("content", ""):
+                                break
                             
                     except json.JSONDecodeError:
                         continue
@@ -91,7 +113,9 @@ async def send_text_to_backend(user_text):
             # Extract the assistant response
             for resp in reversed(responses):
                 if resp.get("type") == "text" and resp.get("role") == "assistant":
-                    return resp.get("content", "")
+                    # Skip greeting
+                    if "Welcome" not in resp.get("content", ""):
+                        return resp.get("content", "")
             
             return None
             
@@ -101,14 +125,31 @@ async def send_text_to_backend(user_text):
 
 async def send_audio_to_backend(audio_bytes):
     try:
-        # Increase connection timeout significantly for audio processing
+        # Significantly increase timeouts for LLM processing (extraction + response + TTS)
         async with websockets.connect(
             WS_URL, 
-            ping_timeout=30,      # Keep connection alive for 30 seconds
-            close_timeout=15,     # Wait 15 seconds before force-closing
-            max_size=10*1024*1024 # 10MB max message size
+            ping_timeout=60,      # Keep connection alive for 60 seconds
+            close_timeout=20,     # Wait 20 seconds before force-closing
+            max_size=10*1024*1024, # 10MB max message size
+            ping_interval=20      # Send ping every 20 seconds to keep alive
         ) as websocket:
-            # Send audio as binary
+            # First, receive and skip the initial greeting (backend sends this on connect)
+            try:
+                # Wait for greeting messages (text + audio)
+                for _ in range(3):  # Greeting usually has 2-3 messages
+                    greeting_msg = await asyncio.wait_for(websocket.recv(), timeout=5.0)
+                    if isinstance(greeting_msg, str):
+                        try:
+                            data = json.loads(greeting_msg)
+                            # Skip greeting messages
+                            if data.get("type") == "text" and "Welcome" in data.get("content", ""):
+                                continue
+                        except:
+                            pass
+            except asyncio.TimeoutError:
+                pass  # No greeting or already consumed
+            
+            # Now send audio as binary
             await websocket.send(audio_bytes)
             
             responses = []
@@ -116,11 +157,11 @@ async def send_audio_to_backend(audio_bytes):
             assistant_response = None
             response_audio = None
             
-            # Wait for multiple messages with longer timeout
-            for i in range(6):  # Try up to 6 times (60 seconds total)
+            # Wait for multiple messages with much longer timeout for LLM processing
+            for i in range(10):  # Try up to 10 times (200 seconds total)
                 try:
-                    # Wait up to 15 seconds per message (audio processing takes time)
-                    message = await asyncio.wait_for(websocket.recv(), timeout=15.0)
+                    # Wait up to 20 seconds per message (LLM extraction + response takes time)
+                    message = await asyncio.wait_for(websocket.recv(), timeout=20.0)
                     
                     # Check if message is binary (audio) or text (JSON)
                     if isinstance(message, bytes):
@@ -142,7 +183,9 @@ async def send_audio_to_backend(audio_bytes):
                             if data.get("role") == "user":
                                 user_transcript = data.get("content", "")
                             elif data.get("role") == "assistant":
-                                assistant_response = data.get("content", "")
+                                # Skip greeting if it comes through
+                                if "Welcome" not in data.get("content", ""):
+                                    assistant_response = data.get("content", "")
                                 # Continue to get audio after this
                                 
                     except json.JSONDecodeError:
@@ -150,10 +193,13 @@ async def send_audio_to_backend(audio_bytes):
                         
                 except asyncio.TimeoutError:
                     # If we have transcript and response but no audio yet, keep waiting
-                    if user_transcript and assistant_response and not response_audio and i < 5:
+                    if user_transcript and assistant_response and not response_audio and i < 8:
                         continue
-                    # Otherwise, break and return what we have
-                    break
+                    # If we have at least the response text, return what we have
+                    elif assistant_response:
+                        break
+                    # Otherwise, keep trying
+                    continue
             
             return user_transcript, assistant_response, response_audio
             
@@ -187,6 +233,8 @@ col1, col2 = st.columns([2, 1])
 with col1:
     st.header("Voice and Text Chat")
     
+    st.info("💡 **Using AI-Powered Extraction**: Our system uses advanced AI to understand your requests, even with speech variations like 'at the rate' for '@' or 'dot' for '.'")
+    
     st.subheader("Record Your Voice")
     try:
         audio_bytes = audio_recorder(
@@ -202,8 +250,12 @@ with col1:
         audio_bytes = None
     
     if audio_bytes:
-        with st.spinner("Processing your voice..."):
+        with st.spinner("🎤 Processing your voice... (This may take 10-15 seconds)"):
             try:
+                # Show progress
+                status_placeholder = st.empty()
+                status_placeholder.info("🔄 Step 1/4: Transcribing audio...")
+                
                 # Send audio to backend
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
@@ -211,6 +263,7 @@ with col1:
                 loop.close()
                 
                 if user_transcript:
+                    status_placeholder.info("✅ Step 2/4: Transcription complete! Extracting information...")
                     # Add user transcript to conversation with audio
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     st.session_state.conversation_history.append({
@@ -221,6 +274,7 @@ with col1:
                     })
                 
                 if assistant_response:
+                    status_placeholder.info("✅ Step 3/4: Generating AI response...")
                     # Add assistant response to conversation with audio
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     st.session_state.conversation_history.append({
@@ -229,12 +283,14 @@ with col1:
                         "timestamp": timestamp,
                         "audio": response_audio  # Store assistant's TTS audio
                     })
-                    st.success("Voice message processed!")
+                    status_placeholder.success("✅ Step 4/4: Voice message processed successfully!")
+                    st.balloons()
                 else:
-                    st.error("Failed to get response from backend")
+                    status_placeholder.error("❌ Failed to get response from backend. Please try again.")
                 
             except Exception as e:
-                st.error(f"Error processing audio: {e}")
+                st.error(f"❌ Error processing audio: {str(e)[:200]}")
+                st.info("💡 Tip: Make sure the backend is running and try recording again.")
     
     st.markdown("---")
     

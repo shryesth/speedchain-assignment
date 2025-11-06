@@ -1,7 +1,11 @@
 import json
 import os
+import logging
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
+
+logger = logging.getLogger(__name__)
+
 
 class MemoryService:
     """Service for managing conversation memory and metadata extraction."""
@@ -9,6 +13,11 @@ class MemoryService:
     def __init__(self, data_file: str = "../data/conversations.json"):
         self.data_file = data_file
         self.conversations = self._load_conversations()
+        self.llm_service = None  # Will be injected
+    
+    def set_llm_service(self, llm_service):
+        """Inject LLM service for intelligent metadata extraction."""
+        self.llm_service = llm_service
 
     def _load_conversations(self) -> Dict[str, Any]:
         """Load conversations from JSON file."""
@@ -60,8 +69,48 @@ class MemoryService:
             return self.conversations[user_id]["messages"]
         return []
 
-    def extract_metadata(self, user_id: str, text: str) -> Dict[str, Any]:
-        """Extract metadata from conversation text."""
+    async def extract_metadata(self, user_id: str, text: str) -> Dict[str, Any]:
+        """
+        Extract metadata from conversation text using LLM (preferred) or regex fallback.
+        LLM extraction is much more robust for speech-to-text variations.
+        """
+        metadata = {}
+        
+        # Try LLM extraction first (if available)
+        if self.llm_service:
+            try:
+                # Get full conversation context for better extraction
+                conversation_history = self.get_conversation_history(user_id)
+                
+                # Build context from recent messages
+                context_messages = conversation_history[-5:] if len(conversation_history) > 5 else conversation_history
+                context_text = " ".join([msg["content"] for msg in context_messages])
+                context_text += f" {text}"  # Add current message
+                
+                # Use LLM to extract metadata
+                metadata = await self.llm_service.extract_metadata_with_llm(context_text)
+                logger.info(f"LLM extracted metadata: {metadata}")
+                
+            except Exception as e:
+                logger.error(f"LLM extraction failed, falling back to regex: {e}")
+                metadata = self._extract_metadata_regex(text)
+        else:
+            # Fallback to regex if LLM not available
+            logger.warning("LLM service not available, using regex extraction")
+            metadata = self._extract_metadata_regex(text)
+
+        # Update user metadata
+        if user_id in self.conversations:
+            self.conversations[user_id]["metadata"].update(metadata)
+            self._save_conversations()
+
+        return metadata
+
+    def _extract_metadata_regex(self, text: str) -> Dict[str, Any]:
+        """
+        Fallback regex-based metadata extraction.
+        Less robust than LLM but works without API calls.
+        """
         import re
         
         metadata = {}
@@ -152,11 +201,6 @@ class MemoryService:
             if keyword in text_lower:
                 metadata["date"] = keyword.title()
                 break
-
-        # Update user metadata
-        if user_id in self.conversations:
-            self.conversations[user_id]["metadata"].update(metadata)
-            self._save_conversations()
 
         return metadata
 
