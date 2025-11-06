@@ -125,7 +125,6 @@ async def send_text_to_backend(user_text):
 
 async def send_audio_to_backend(audio_bytes):
     try:
-        # Significantly increase timeouts for LLM processing (extraction + response + TTS)
         async with websockets.connect(
             WS_URL, 
             ping_timeout=60,      # Keep connection alive for 60 seconds
@@ -133,7 +132,6 @@ async def send_audio_to_backend(audio_bytes):
             max_size=10*1024*1024, # 10MB max message size
             ping_interval=20      # Send ping every 20 seconds to keep alive
         ) as websocket:
-            # First, receive and skip the initial greeting (backend sends this on connect)
             try:
                 # Wait for greeting messages (text + audio)
                 for _ in range(3):  # Greeting usually has 2-3 messages
@@ -233,7 +231,7 @@ col1, col2 = st.columns([2, 1])
 with col1:
     st.header("Voice and Text Chat")
     
-    st.info("💡 **Using AI-Powered Extraction**: Our system uses advanced AI to understand your requests, even with speech variations like 'at the rate' for '@' or 'dot' for '.'")
+    # st.info("💡 **Using AI-Powered Extraction**: Our system uses advanced AI to understand your requests, even with speech variations like 'at the rate' for '@' or 'dot' for '.'")
     
     st.subheader("Record Your Voice")
     try:
