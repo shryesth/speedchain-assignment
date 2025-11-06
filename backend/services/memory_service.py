@@ -62,6 +62,8 @@ class MemoryService:
 
     def extract_metadata(self, user_id: str, text: str) -> Dict[str, Any]:
         """Extract metadata from conversation text."""
+        import re
+        
         metadata = {}
         text_lower = text.lower()
         
@@ -74,40 +76,84 @@ class MemoryService:
                     potential_name = parts[1].strip().split()[0]
                     if len(potential_name) > 1:
                         metadata["customer_name"] = potential_name.title()
+                        break
 
         # Extract service types
         services = ["haircut", "coloring", "color", "styling", "spa", "treatment"]
         for service in services:
             if service in text_lower:
                 metadata["service_type"] = service.title()
+                break
 
         # Extract stylist preferences
         stylists = ["riya", "maya", "sarah", "alex"]
         for stylist in stylists:
             if stylist in text_lower:
                 metadata["preferred_stylist"] = stylist.title()
+                break
 
-        # Extract email
-        import re
+        # Extract email - handle both normal emails and speech-to-text variations
+        # First try normal email pattern
         email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         emails = re.findall(email_pattern, text)
         if emails:
             metadata["email"] = emails[0]
+        else:
+            # Clean up common speech-to-text variations for email
+            # Look for email keywords to isolate the email part
+            email_keywords = ['email is', 'email id is', 'email address is', 'my email', 'email:', 'mail is']
+            email_part = text_lower
+            
+            for keyword in email_keywords:
+                if keyword in email_part:
+                    # Extract only the part after the keyword
+                    email_part = email_part.split(keyword)[1].strip()
+                    # Take only the first sentence/phrase (up to period, comma, or end)
+                    email_part = email_part.split('.')[0].split(',')[0].split('and')[0].strip()
+                    break
+            
+            # Now clean up the isolated email part
+            email_part = email_part.replace('at the rate', '@')
+            email_part = email_part.replace('at rate', '@')
+            email_part = email_part.replace(' at ', '@')
+            email_part = email_part.replace(' dot ', '.')
+            email_part = email_part.replace(' by ', '')
+            
+            # Try to extract email from cleaned text
+            emails = re.findall(email_pattern, email_part)
+            if emails:
+                metadata["email"] = emails[0]
+            else:
+                # Last resort: look for pattern like "word+numbers@word.com"
+                simple_pattern = r'([a-z0-9]+)@([a-z0-9]+\.[a-z]{2,})'
+                simple_match = re.search(simple_pattern, email_part)
+                if simple_match:
+                    metadata["email"] = simple_match.group(0)
 
-        # Extract time and date keywords
-        time_slots = ["10", "11", "12", "2", "3", "4", "5", "6"]
-        for slot in time_slots:
-            if f"{slot} am" in text_lower or f"{slot} pm" in text_lower or f"{slot}:00" in text_lower:
-                if "am" in text_lower:
-                    metadata["time"] = f"{slot}:00 AM"
+        # Extract time - improved pattern matching
+        time_patterns = [
+            (r'(\d{1,2})\s*(?:a\.?m\.?|am)', 'AM'),
+            (r'(\d{1,2})\s*(?:p\.?m\.?|pm)', 'PM'),
+            (r'(\d{1,2}):00\s*(am|pm)', lambda m: m.upper())
+        ]
+        
+        for pattern, suffix in time_patterns:
+            match = re.search(pattern, text_lower)
+            if match:
+                hour = match.group(1)
+                if isinstance(suffix, str):
+                    metadata["time"] = f"{hour}:00 {suffix}"
                 else:
-                    metadata["time"] = f"{slot}:00 PM"
+                    metadata["time"] = f"{hour}:00 {match.group(2).upper()}"
+                break
 
         date_keywords = ["tomorrow", "today", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
         for keyword in date_keywords:
             if keyword in text_lower:
                 metadata["date"] = keyword.title()
+                break
 
+        # Update user metadata
         if user_id in self.conversations:
             self.conversations[user_id]["metadata"].update(metadata)
             self._save_conversations()

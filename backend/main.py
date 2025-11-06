@@ -133,6 +133,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     
                     # Extract metadata
                     metadata = memory_service.extract_metadata(client_id, transcription)
+                    logger.info(f"Extracted metadata from message: {metadata}")
                     
                     # Send transcription to client
                     await manager.send_message({
@@ -164,9 +165,17 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     await manager.send_audio(response_audio, client_id)
                     
                     # Check if appointment booking is needed
-                    if await llm_service.should_book_appointment(llm_response, metadata):
-                        user_metadata = memory_service.get_user_metadata(client_id)
-                        if all(k in user_metadata for k in ["customer_name", "service_type", "email", "date", "time"]):
+                    # Use accumulated user metadata, not just current message metadata
+                    user_metadata = memory_service.get_user_metadata(client_id)
+                    if await llm_service.should_book_appointment(llm_response, user_metadata):
+                        logger.info(f"Booking check - Metadata available: {user_metadata}")
+                        required_fields = ["customer_name", "service_type", "email", "date", "time"]
+                        missing_fields = [f for f in required_fields if f not in user_metadata]
+                        
+                        if missing_fields:
+                            logger.info(f"Missing fields for booking: {missing_fields}")
+                        else:
+                            logger.info(f"All fields present! Scheduling appointment...")
                             # Book appointment
                             appointment_result = await appointment_service.schedule_appointment(
                                 customer_name=user_metadata["customer_name"],
@@ -177,11 +186,14 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                                 email=user_metadata["email"],
                                 phone=user_metadata.get("phone", "")
                             )
+                            logger.info(f"Appointment scheduled: {appointment_result}")
                             
                             await manager.send_message({
                                 "type": "appointment_confirmed",
                                 "data": appointment_result
                             }, client_id)
+                    else:
+                        logger.info(f"No booking detected in response")
             
             elif "text" in data:
                 # Handle text messages (for testing/fallback)
@@ -191,15 +203,54 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                 # Process similar to audio
                 memory_service.add_message(client_id, "user", text_data)
                 metadata = memory_service.extract_metadata(client_id, text_data)
+                logger.info(f"Extracted metadata from message: {metadata}")
+                
                 history = memory_service.get_conversation_history(client_id)
                 llm_response = await llm_service.get_response(text_data, history)
                 memory_service.add_message(client_id, "assistant", llm_response)
                 
+                # Send text response
                 await manager.send_message({
                     "type": "text",
                     "role": "assistant",
                     "content": llm_response
                 }, client_id)
+                
+                # Convert response to speech (same as audio messages)
+                response_audio = await voice_service.text_to_speech(llm_response)
+                
+                # Send audio response
+                await manager.send_audio(response_audio, client_id)
+                
+                # Check if appointment booking is needed (same as audio messages)
+                user_metadata = memory_service.get_user_metadata(client_id)
+                if await llm_service.should_book_appointment(llm_response, user_metadata):
+                    logger.info(f"Booking check - Metadata available: {user_metadata}")
+                    required_fields = ["customer_name", "service_type", "email", "date", "time"]
+                    missing_fields = [f for f in required_fields if f not in user_metadata]
+                    
+                    if missing_fields:
+                        logger.info(f"Missing fields for booking: {missing_fields}")
+                    else:
+                        logger.info(f"All fields present! Scheduling appointment...")
+                        # Book appointment
+                        appointment_result = await appointment_service.schedule_appointment(
+                            customer_name=user_metadata["customer_name"],
+                            service_type=user_metadata["service_type"],
+                            stylist=user_metadata.get("preferred_stylist", "Any Available"),
+                            date=user_metadata["date"],
+                            time=user_metadata["time"],
+                            email=user_metadata["email"],
+                            phone=user_metadata.get("phone", "")
+                        )
+                        logger.info(f"Appointment scheduled: {appointment_result}")
+                        
+                        await manager.send_message({
+                            "type": "appointment_confirmed",
+                            "data": appointment_result
+                        }, client_id)
+                else:
+                    logger.info(f"No booking detected in response")
                 
     except WebSocketDisconnect:
         manager.disconnect(client_id)

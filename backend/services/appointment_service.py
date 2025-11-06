@@ -66,6 +66,11 @@ class AppointmentService:
     async def _send_confirmation_email(self, appointment: Dict[str, Any]):
         """Send appointment confirmation email asynchronously."""
         try:
+            # Skip email if credentials not configured
+            if not self.gmail_user or not self.gmail_password:
+                print("Email credentials not configured. Skipping email notification.")
+                return
+            
             subject = f"Appointment Confirmation - {appointment['service_type']} at Gloss & Glow"
             
             body = f"""
@@ -95,18 +100,11 @@ The Gloss & Glow Team
             msg['Subject'] = subject
             msg.attach(MIMEText(body, 'plain'))
 
-            if self.gmail_user and self.gmail_password:
-                await aiosmtplib.send(
-                    msg,
-                    hostname="smtp.gmail.com",
-                    port=587,
-                    start_tls=True,
-                    username=self.gmail_user,
-                    password=self.gmail_password
-                )
+            # Use aiosmtplib with proper authentication
+            async with aiosmtplib.SMTP(hostname="smtp.gmail.com", port=587) as smtp:
+                await smtp.login(self.gmail_user, self.gmail_password)
+                await smtp.send_message(msg)
                 print(f"Confirmation email sent to {appointment['email']}")
-            else:
-                print("Email credentials not configured")
                 
         except Exception as e:
             print(f"Error sending email: {e}")
