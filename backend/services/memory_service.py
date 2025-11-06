@@ -76,19 +76,22 @@ class MemoryService:
         """
         metadata = {}
         
+        # Get existing metadata to provide context
+        existing_metadata = self.get_user_metadata(user_id) if user_id in self.conversations else {}
+        
         # Try LLM extraction first (if available)
         if self.llm_service:
             try:
                 # Get full conversation context for better extraction
                 conversation_history = self.get_conversation_history(user_id)
                 
-                # Build context from recent messages
-                context_messages = conversation_history[-5:] if len(conversation_history) > 5 else conversation_history
+                # Build context from recent messages (last 10 for better context)
+                context_messages = conversation_history[-10:] if len(conversation_history) > 10 else conversation_history
                 context_text = " ".join([msg["content"] for msg in context_messages])
                 context_text += f" {text}"  # Add current message
                 
-                # Use LLM to extract metadata
-                metadata = await self.llm_service.extract_metadata_with_llm(context_text)
+                # Use LLM to extract metadata with existing context
+                metadata = await self.llm_service.extract_metadata_with_llm(context_text, existing_metadata)
                 logger.info(f"LLM extracted metadata: {metadata}")
                 
             except Exception as e:
@@ -101,7 +104,15 @@ class MemoryService:
 
         # Update user metadata
         if user_id in self.conversations:
+            # Log before update
+            old_metadata = self.conversations[user_id]["metadata"].copy()
             self.conversations[user_id]["metadata"].update(metadata)
+            new_metadata = self.conversations[user_id]["metadata"]
+            
+            logger.info(f"Metadata update - Old: {old_metadata}")
+            logger.info(f"Metadata update - Extracted: {metadata}")
+            logger.info(f"Metadata update - New (accumulated): {new_metadata}")
+            
             self._save_conversations()
 
         return metadata

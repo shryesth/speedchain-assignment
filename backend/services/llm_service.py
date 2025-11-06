@@ -128,7 +128,9 @@ Remember: You represent the salon's first impression!"""
         # Check for booking confirmation phrases
         booking_phrases = [
             "confirmed", "scheduled", "booked", "appointment set",
-            "i've scheduled", "i've booked", "all set"
+            "i've scheduled", "i've booked", "all set",
+            "appointment is confirmed", "you're all set",
+            "i have you booked", "booking confirmed"
         ]
         
         response_lower = llm_response.lower()
@@ -136,35 +138,73 @@ Remember: You represent the salon's first impression!"""
         
         # Check if we have all required information
         required_fields = ["customer_name", "service_type", "email", "date", "time"]
-        has_all_info = all(field in metadata for field in required_fields)
+        has_all_info = all(field in metadata and metadata[field] for field in required_fields)
+        
+        # Log for debugging
+        if has_booking_phrase:
+            logger.info(f"Booking phrase detected in response: {llm_response}")
+        if has_all_info:
+            logger.info(f"All required fields present: {metadata}")
+        else:
+            missing = [f for f in required_fields if f not in metadata or not metadata[f]]
+            logger.info(f"Missing required fields for booking: {missing}")
         
         return has_booking_phrase and has_all_info
 
-    async def extract_metadata_with_llm(self, conversation_text: str) -> Dict[str, Any]:
+    async def extract_metadata_with_llm(self, conversation_text: str, existing_metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Extract appointment metadata from conversation using LLM with structured output.
         This is more robust than regex for handling speech-to-text variations.
         
         Args:
             conversation_text: The conversation text to extract metadata from
+            existing_metadata: Previously extracted metadata to include in context
             
         Returns:
             Dictionary with extracted metadata fields
         """
         try:
+            # Build existing info context
+            existing_info = ""
+            if existing_metadata:
+                existing_info = "\n\nPreviously extracted information:"
+                for key, value in existing_metadata.items():
+                    existing_info += f"\n- {key}: {value}"
+            
             extraction_prompt = f"""Extract appointment booking information from this conversation text.
 The text may come from speech-to-text and might have variations like:
 - "my email is shresth at the rate 4236 at gmail dot com" → shresth4236@gmail.com
-- "my name is john smith" → John Smith
+- "aloni at the regiment" → aloni@theregiment.com (assume .com if no extension mentioned)
+- "my name is john smith" → John Smith  
 - "eleven am" or "11 am" → 11:00 AM
 - "hair coloring" or "color" → Hair Coloring
 
-Conversation text: "{conversation_text}"
+Conversation text: "{conversation_text}"{existing_info}
 
-Extract ALL available information. Return null for fields not mentioned.
+IMPORTANT: 
+1. Extract ALL available information from the ENTIRE conversation
+2. Include previously extracted information in your response
+3. Look for customer name, service type, stylist preference, date, time, email, and phone
+4. Return null only for fields that were NEVER mentioned in the conversation
+5. Keep previously extracted values if they're not updated in new messages
+6. If user mentions MULTIPLE services, pick the PRIMARY/FIRST one mentioned as a STRING (not a list)
+7. For incomplete email domains, add .com as default (e.g., "regiment" → "regiment.com")
+8. Always return service_type as a STRING, never as an array
+
 Service types: Haircut, Hair Coloring, Styling, Spa Treatment
 Stylists: Riya, Maya, Sarah, Alex
 Time format: Use 12-hour format with AM/PM (e.g., 11:00 AM)
+
+Return format example:
+{{
+  "customer_name": "John Smith",
+  "service_type": "Haircut",
+  "preferred_stylist": "Riya",
+  "date": "Monday",
+  "time": "10:00 AM",
+  "email": "john@gmail.com",
+  "phone": null
+}}
 """
 
             response = await self.client.chat.completions.create(
@@ -172,7 +212,7 @@ Time format: Use 12-hour format with AM/PM (e.g., 11:00 AM)
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a data extraction assistant. Extract appointment information accurately, handling speech-to-text variations. Convert email addresses properly (e.g., 'at the rate' → '@', 'dot' → '.'). Return valid JSON."
+                        "content": "You are a data extraction assistant. Extract appointment information accurately from the ENTIRE conversation, handling speech-to-text variations. Convert email addresses properly (e.g., 'at the rate' → '@', 'dot' → '.'). Include ALL information mentioned anywhere in the conversation. Return valid JSON with all available fields."
                     },
                     {
                         "role": "user",
@@ -185,33 +225,74 @@ Time format: Use 12-hour format with AM/PM (e.g., 11:00 AM)
             
             # Parse the JSON response
             extracted_data = json.loads(response.choices[0].message.content)
+            logger.info(f"Raw LLM extraction response: {extracted_data}")
             
             # Clean and validate the extracted data
             metadata = {}
             
             if extracted_data.get("customer_name"):
-                metadata["customer_name"] = extracted_data["customer_name"].strip().title()
+                name = extracted_data["customer_name"]
+                if isinstance(name, str):
+                    metadata["customer_name"] = name.strip().title()
             
             if extracted_data.get("service_type"):
-                metadata["service_type"] = extracted_data["service_type"].strip().title()
+                service = extracted_data["service_type"]
+                # Handle both string and list (user might request multiple services)
+                if isinstance(service, list):
+                    # Take the first service or join them
+                    metadata["service_type"] = service[0].strip().title() if service else None
+                elif isinstance(service, str):
+                    metadata["service_type"] = service.strip().title()
             
-            if extracted_data.get("preferred_stylist"):
-                metadata["preferred_stylist"] = extracted_data["preferred_stylist"].strip().title()
+            if extracted_data.get("preferred_stylist") or extracted_data.get("stylist"):
+                stylist = extracted_data.get("preferred_stylist") or extracted_data.get("stylist")
+                if isinstance(stylist, str):
+                    metadata["preferred_stylist"] = stylist.strip().title()
+                elif isinstance(stylist, dict):
+                    # If LLM returns nested structure, take the first value
+                    for key, value in stylist.items():
+                        if isinstance(value, str):
+                            metadata["preferred_stylist"] = value.strip().title()
+                            break
             
             if extracted_data.get("date"):
-                metadata["date"] = extracted_data["date"].strip().title()
+                date = extracted_data["date"]
+                if isinstance(date, str):
+                    metadata["date"] = date.strip().title()
             
             if extracted_data.get("time"):
-                metadata["time"] = extracted_data["time"].strip()
+                time = extracted_data["time"]
+                if isinstance(time, str):
+                    metadata["time"] = time.strip()
             
             if extracted_data.get("email"):
-                # Basic email validation
+                # More lenient email validation - handle incomplete domains
                 email = extracted_data["email"].strip().lower()
-                if "@" in email and "." in email:
-                    metadata["email"] = email
+                
+                # Basic check: has @ and at least one character on each side
+                if "@" in email and len(email.split("@")) == 2:
+                    local, domain = email.split("@")
+                    if local and domain:
+                        # If domain looks incomplete (no dot), try to fix common patterns
+                        if "." not in domain:
+                            # Common speech-to-text errors
+                            domain_fixes = {
+                                "gmail": "gmail.com",
+                                "yahoo": "yahoo.com",
+                                "hotmail": "hotmail.com",
+                                "outlook": "outlook.com",
+                                "theregiment": "theregiment.com",  # Assume .com for unclear domains
+                                "regiment": "regiment.com"
+                            }
+                            domain = domain_fixes.get(domain, f"{domain}.com")
+                        
+                        metadata["email"] = f"{local}@{domain}"
+                        logger.info(f"Email extracted and cleaned: {metadata['email']}")
             
             if extracted_data.get("phone"):
-                metadata["phone"] = extracted_data["phone"].strip()
+                phone = extracted_data["phone"]
+                if isinstance(phone, str):
+                    metadata["phone"] = phone.strip()
             
             logger.info(f"LLM extracted metadata: {metadata}")
             return metadata
